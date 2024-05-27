@@ -1,0 +1,70 @@
+# Note: This is a composite GitHub Actions, it should do all env setup, caching an so on, so other pipelines can just compose their own stuff on top of that.
+# Docs: https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+
+name: "Storm Software - Notification"
+description: "A composite action configuration used across many Storm Software repos to setup: checkout, Node.js, a package manager, and npm registry configuration."
+author: "sullivanpj"
+inputs:
+  title:
+    description: Text to display in the notification
+    required: true
+  subtitle:
+    description: Subtitle to display in the notification
+    required: true
+  description:
+    description: Description to display in the notification
+    required: false
+  color:
+    description: Color of the displayed notification
+    required: true
+    default: "2077350"
+  status:
+    description: Status to display in the notification
+    required: true
+    default: "In Progress"
+  stormBot:
+    description: The github username of the Storm bot
+    required: false
+    default: "Stormie-Bot"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Send Slack notification - Deployment started
+      uses: slackapi/slack-github-action@v1.26.0
+      with:
+        channel-id: "notifications"
+        payload: |
+          {
+            "text": "${{ inputs.title }}",
+            "attachments": [
+              {
+                "pretext": "${{ inputs.subtitle }}",
+                "color": ${{ inputs.color }},
+                "fields": [
+                  {
+                    "title": "Status",
+                    "short": true,
+                    "value": "${{ inputs.status }}"
+                  },
+                  {
+                    "title": "Description",
+                    "short": true,
+                    "value": "${{ inputs.description }}"
+                  }
+                ]
+              }
+            ]
+          }
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.slackToken }}
+
+    - name: Send Discord notification - Deployment started
+      uses: Ilshidur/action-discord@master
+      with:
+        args: "${{ inputs.title }}"
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.discordWebhook }}
+        DISCORD_USERNAME: ${{ inputs.stormBot }}
+        DISCORD_AVATAR: "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-stormie.png"
+        DISCORD_EMBEDS: '[{"title": "${{ inputs.subtitle }}", "description": "${{ inputs.description }}", "thumbnail": { "url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png" }, "image": { "url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-fill.png" }, "author": { "name": "${{ github.actor }}", "url": "https://github.com/${{ github.actor }}", "icon_url": "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4" }, "fields": [ { "name": "Repository", "value": "${{ github.repository }}" }, { "name": "Repository URL", "value": "${{ github.repositoryUrl }}" }, { "name": "Pipeline Status", "value": "${{ inputs.status }}" }], "color": ${{ inputs.color }}, "timestamp": "${{ github.event.repository.updated_at }}", "url": "${{ github.event.pull_request.html_url || github.event.head_commit.url }}", "footer": { "text": "Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}", "icon_url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png" } }]'
