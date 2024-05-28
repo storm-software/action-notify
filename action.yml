@@ -22,6 +22,12 @@ inputs:
     description: Status to display in the notification
     required: true
     default: "In Progress"
+  slackToken:
+    description: The github username of the Storm bot
+    required: true
+  discordWebhook:
+    description: The github username of the Storm bot
+    required: true
   stormBot:
     description: The github username of the Storm bot
     required: false
@@ -57,14 +63,14 @@ runs:
             ]
           }
       env:
-        SLACK_BOT_TOKEN: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+        SLACK_BOT_TOKEN: ${{ inputs.slackToken }}
 
     - name: Send Discord notification - Deployment started
       uses: Ilshidur/action-discord@master
       with:
         args: "${{ inputs.title }}"
       env:
-        DISCORD_WEBHOOK: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK }}
+        DISCORD_WEBHOOK: ${{ inputs.discordWebhook }}
         DISCORD_USERNAME: ${{ inputs.stormBot }}
         DISCORD_AVATAR: "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-stormie.png"
         DISCORD_EMBEDS: '[{"title": "${{ inputs.subtitle }}", "description": "${{ inputs.description }}", "thumbnail": { "url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png" }, "image": { "url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-fill.png" }, "author": { "name": "${{ github.actor }}", "url": "https://github.com/${{ github.actor }}", "icon_url": "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4" }, "fields": [ { "name": "Repository", "value": "${{ github.repository }}" }, { "name": "Repository URL", "value": "${{ github.repositoryUrl }}" }, { "name": "Pipeline Status", "value": "${{ inputs.status }}" }], "color": ${{ inputs.color }}, "timestamp": "${{ github.event.repository.updated_at }}", "url": "${{ github.event.pull_request.html_url || github.event.head_commit.url }}", "footer": { "text": "Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}", "icon_url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png" } }]'
