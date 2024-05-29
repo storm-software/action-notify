@@ -46,7 +46,7 @@ runs:
             "attachments": [
               {
                 "pretext": "${{ inputs.subtitle }}",
-                "color": ${{ inputs.color }},
+                "color": "${{ inputs.color }}",
                 "fields": [
                   {
                     "title": "Status",
