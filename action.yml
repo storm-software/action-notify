@@ -52,11 +52,6 @@ runs:
                     "title": "Status",
                     "short": true,
                     "value": "${{ inputs.status }}"
-                  },
-                  {
-                    "title": "Description",
-                    "short": true,
-                    "value": "${{ inputs.description }}"
                   }
                 ]
               }
