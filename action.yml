@@ -4,6 +4,11 @@
 name: "Storm Software - Notification"
 description: "A composite action configuration used across many Storm Software repos to setup: checkout, Node.js, a package manager, and npm registry configuration."
 author: "sullivanpj"
+
+branding:
+  icon: "speaker"
+  color: "gray-dark"
+
 inputs:
   title:
     description: Text to display in the notification
@@ -22,13 +27,19 @@ inputs:
     description: Status to display in the notification
     required: true
     default: "In Progress"
-  slackToken:
+  slack-token:
+    description: The Slack token used by the bot
+    required: true
+  telegram-token:
+    description: The Telegram token used by the bot
+    required: true
+  telegram-chat:
+    description: The Telegram chat used by the bot
+    required: true
+  discord-webhook:
     description: The github username of the Storm bot
     required: true
-  discordWebhook:
-    description: The github username of the Storm bot
-    required: true
-  stormBot:
+  storm-bot:
     description: The github username of the Storm bot
     required: false
     default: "Stormie-Bot"
@@ -36,7 +47,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Send Slack notification - Deployment started
+    - name: Send Slack notification
       uses: slackapi/slack-github-action@v1.26.0
       with:
         channel-id: "notifications"
@@ -58,14 +69,24 @@ runs:
             ]
           }
       env:
-        SLACK_BOT_TOKEN: ${{ inputs.slackToken }}
+        SLACK_BOT_TOKEN: ${{ inputs.slack-token }}
 
-    - name: Send Discord notification - Deployment started
+    - name: Send Discord notification
       uses: Ilshidur/action-discord@master
       with:
-        args: "${{ inputs.title }}"
+        args: ${{ inputs.title }}
       env:
-        DISCORD_WEBHOOK: ${{ inputs.discordWebhook }}
-        DISCORD_USERNAME: ${{ inputs.stormBot }}
+        DISCORD_WEBHOOK: ${{ inputs.discord-webhook }}
+        DISCORD_USERNAME: ${{ inputs.storm-bot }}
         DISCORD_AVATAR: "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-stormie.png"
         DISCORD_EMBEDS: '[{"title": "${{ inputs.subtitle }}", "description": "${{ inputs.description }}", "thumbnail": { "url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png" }, "image": { "url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-fill.png" }, "author": { "name": "${{ github.actor }}", "url": "https://github.com/${{ github.actor }}", "icon_url": "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4" }, "fields": [ { "name": "Repository", "value": "${{ github.repository }}" }, { "name": "Repository URL", "value": "${{ github.repositoryUrl }}" }, { "name": "Pipeline Status", "value": "${{ inputs.status }}" }], "color": ${{ inputs.color }}, "timestamp": "${{ github.event.repository.updated_at }}", "url": "${{ github.event.pull_request.html_url || github.event.head_commit.url }}", "footer": { "text": "Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}", "icon_url": "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png" } }]'
+
+    - name: Send Telegram notification
+      uses: storm-software/action-telegram-notify@main
+      with:
+        status: ${{ inputs.status }}
+        token: ${{ inputs.telegram-token }}
+        chat: ${{ inputs.telegram-chat }}
+      env:
+        TELEGRAM_TOKEN: ${{ inputs.telegram-token }}
+        TELEGRAM_CHAT: ${{ inputs.telegram-chat }}
