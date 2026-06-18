@@ -2,7 +2,7 @@
 # Docs: https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 
 name: "Storm Software - Notification"
-description: "A composite action configuration used across many Storm Software repos to setup: checkout, Node.js, a package manager, and npm registry configuration."
+description: "A composite action used by Storm Software repositories to send notifications during deployments and other CI/CD events."
 author: "sullivanpj"
 
 branding:
@@ -37,18 +37,18 @@ inputs:
     description: The Telegram chat used by the bot
     required: true
   discord-webhook:
-    description: The github username of the Storm bot
+    description: The Discord webhook URL used by the bot
     required: true
   storm-bot:
     description: The github username of the Storm bot
     required: false
-    default: "Stormie-Bot"
+    default: "stormie-bot"
 
 runs:
   using: "composite"
   steps:
     - name: Send Slack notification
-      uses: slackapi/slack-github-action@v1.26.0
+      uses: slackapi/slack-github-action@fcfb566f8b0aab22203f066d80ca1d7e4b5d05b3 # v1.27.1
       with:
         channel-id: "notifications"
         payload: |
