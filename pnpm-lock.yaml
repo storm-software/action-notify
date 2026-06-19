@@ -19,8 +19,8 @@ catalogs:
       specifier: ^0.170.106
       version: 0.170.106
     '@storm-software/git-tools':
-      specifier: ^2.131.80
-      version: 2.131.80
+      specifier: ^2.131.81
+      version: 2.131.81
     '@storm-software/linting-tools':
       specifier: ^1.134.3
       version: 1.134.3
@@ -76,7 +76,7 @@ importers:
         version: 0.170.106(@babel/traverse@7.29.7)(@nx/eslint@22.7.5(@babel/traverse@7.29.7)(@zkochan/js-yaml@0.0.7)(eslint@10.5.0(jiti@2.7.0))(nx@22.7.5))(@prettier/plugin-xml@3.4.2(prettier@3.8.4))(eslint@10.5.0(jiti@2.7.0))(nx@22.7.5)(prettier@3.8.4)(typescript@6.0.3)(zod@4.4.3)
       '@storm-software/git-tools':
         specifier: 'catalog:'
-        version: 2.131.80(@babel/traverse@7.29.7)(@types/node@25.9.3)(typescript@6.0.3)(zod@4.4.3)
+        version: 2.131.81(@babel/traverse@7.29.7)(@types/node@25.9.3)(typescript@6.0.3)(zod@4.4.3)
       '@storm-software/linting-tools':
         specifier: 'catalog:'
         version: 1.134.3
@@ -1390,8 +1390,8 @@ packages:
       zod:
         optional: true
 
-  '@storm-software/git-tools@2.131.80':
-    resolution: {integrity: sha512-UDFPAgYDiiKLXP+eJybIsyyFNmM02M5EJ4FI3UNs4Mbb7t/NzG5mJYncpVy54rrO8h5Y3Yw9qmG5ji3mhd4FgA==}
+  '@storm-software/git-tools@2.131.81':
+    resolution: {integrity: sha512-JaD5efFnD4xzu3J8xwBpwN5/mCg7pjMAqx49YkEXsghmsdilVJDrSYvZk89qhScOv6kV8t5LOCNFEvGAoKLjgw==}
     hasBin: true
     peerDependencies:
       zod: '>=4.0.0'
@@ -1871,8 +1871,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.10.37:
-    resolution: {integrity: sha512-girxaJ7WZssDOFhzCGZTDKoTa1gk6A1TbflaYTpykLJ4UU9Fz9kx1aREM8JCuoVHbL8X8T/mJg7w2oYSq72Oig==}
+  baseline-browser-mapping@2.10.38:
+    resolution: {integrity: sha512-31/02mVB4yuQU6adKk5SlY6m+mxDwUq5KZkyYgnLrrKl7TEm1+3PyDtDBz2kOv/wxZz41GHsvV1A/u6RmiyBvw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -6083,7 +6083,7 @@ snapshots:
       - verdaccio
       - vitest
 
-  '@storm-software/git-tools@2.131.80(@babel/traverse@7.29.7)(@types/node@25.9.3)(typescript@6.0.3)(zod@4.4.3)':
+  '@storm-software/git-tools@2.131.81(@babel/traverse@7.29.7)(@types/node@25.9.3)(typescript@6.0.3)(zod@4.4.3)':
     dependencies:
       '@commitlint/ensure': 19.8.1
       '@commitlint/rules': 19.8.1
@@ -6622,7 +6622,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.10.37: {}
+  baseline-browser-mapping@2.10.38: {}
 
   binary-searching@2.0.5: {}
 
@@ -6647,7 +6647,7 @@ snapshots:
 
   browserslist@4.28.2:
     dependencies:
-      baseline-browser-mapping: 2.10.37
+      baseline-browser-mapping: 2.10.38
       caniuse-lite: 1.0.30001799
       electron-to-chromium: 1.5.375
       node-releases: 2.0.47

@@ -7,7 +7,7 @@ catalog:
   "@storm-software/config-tools": ^1.190.73
   "@storm-software/cspell": ^0.46.141
   "@storm-software/eslint": ^0.170.106
-  "@storm-software/git-tools": ^2.131.80
+  "@storm-software/git-tools": ^2.131.81
   "@storm-software/linting-tools": ^1.134.3
   "@storm-software/markdownlint": ^0.30.229
   "@storm-software/pnpm-tools": ^0.7.84
